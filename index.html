@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Psyx-Manga | Lire n'est que beauté</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ████ LOADER ████ -->
+<div id="loader">
+  <div class="ld-inner">
+    <div class="ld-logo">PSYX</div>
+    <div class="ld-bar"><div class="ld-prog"></div></div>
+    <div class="ld-txt">Lire n'est que beauté</div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🔴 One Piece Ch.1112 &nbsp;⚫&nbsp; Jujutsu Kaisen Ch.267 &nbsp;🔴&nbsp; Solo Leveling COMPLET &nbsp;⚫&nbsp; Chainsaw Man Ch.168 &nbsp;🔴&nbsp; Livraison Port-au-Prince 24h &nbsp;⚫&nbsp; Posters & Figurines disponibles &nbsp;🔴&nbsp;</span>
+    <span>🔴 One Piece Ch.1112 &nbsp;⚫&nbsp; Jujutsu Kaisen Ch.267 &nbsp;🔴&nbsp; Solo Leveling COMPLET &nbsp;⚫&nbsp; Chainsaw Man Ch.168 &nbsp;🔴&nbsp; Livraison Port-au-Prince 24h &nbsp;⚫&nbsp; Posters & Figurines disponibles &nbsp;🔴&nbsp;</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <div class="nav-logo" onclick="goHome()">PSYX<span>MANGA</span></div>
+  <div class="nav-mid">
+    <input id="searchInput" type="text" placeholder="Rechercher un anime, manga…" autocomplete="off"/>
+  </div>
+  <div class="nav-right">
+    <span class="coins">🪙 <b id="coinCount">0</b></span>
+    <button class="btn-cart" id="btnCart">🛒<span class="badge hidden" id="cartBadge">0</span></button>
+    <button class="btn-primary" id="btnAuth">CONNEXION</button>
+    <div class="user-box hidden" id="userBox">
+      <span id="userName">—</span>
+      <button id="btnLogout">⏻</button>
+    </div>
+    <button class="btn-ham" id="btnHam">☰</button>
+  </div>
+</nav>
+
+<!-- MOB MENU -->
+<div class="mob-nav hidden" id="mobNav">
+  <input id="searchMob" type="text" placeholder="Rechercher…" autocomplete="off"/>
+  <a href="#catalogue">Catalogue</a>
+  <a href="#boutique">Boutique</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🇭🇹 EMPIRE EDITION — HAÏTI</div>
+    <h1>PSYX<br/><span>MANGA</span></h1>
+    <p class="slogan">"Lire n'est que beauté"</p>
+    <p class="hero-sub">Anime · Manga · Manhwa · Manhua<br/>Lecture gratuite · Livraison Port-au-Prince 24h</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">EXPLORER →</button>
+      <button class="btn-sec" onclick="document.getElementById('boutique').scrollIntoView({behavior:'smooth'})">🛍 BOUTIQUE</button>
+    </div>
+  </div>
+  <div class="hero-deco">漫画</div>
+</section>
+
+<!-- TYPE TABS -->
+<div class="tabs-bar" id="catalogue">
+  <button class="tab active" data-type="all">Tout</button>
+  <button class="tab" data-type="anime">🎬 Anime<small>Dessin animé JP</small></button>
+  <button class="tab" data-type="manga">📖 Manga<small>BD japonaise</small></button>
+  <button class="tab" data-type="manhwa">🇰🇷 Manhwa<small>BD coréenne</small></button>
+  <button class="tab" data-type="manhua">🇨🇳 Manhua<small>BD chinoise</small></button>
+  <button class="tab tab-adult" data-type="hentai">🔞 Hentai<small>Contenu adulte</small></button>
+</div>
+
+<!-- GENRE + SORT -->
+<div class="filters-bar">
+  <div class="genres">
+    <button class="g active" data-g="all">Tous</button>
+    <button class="g" data-g="shonen">Shōnen 少年</button>
+    <button class="g" data-g="shojo">Shōjo 少女</button>
+    <button class="g" data-g="seinen">Seinen 青年</button>
+    <button class="g" data-g="action">Action</button>
+    <button class="g" data-g="fantasy">Fantasy</button>
+    <button class="g" data-g="romance">Romance</button>
+  </div>
+  <select id="sortBy">
+    <option value="pop">Populaires</option>
+    <option value="new">Nouveaux</option>
+    <option value="az">A → Z</option>
+    <option value="top">Top notés</option>
+  </select>
+</div>
+
+<!-- TRENDING -->
+<section class="section">
+  <div class="sec-title"><span>▮</span> EN TENDANCE</div>
+  <div class="grid" id="gridTrend"></div>
+</section>
+
+<!-- CATALOGUE -->
+<section class="section">
+  <div class="sec-title"><span>▮</span> CATALOGUE COMPLET</div>
+  <div class="grid" id="gridMain"></div>
+  <p class="empty hidden" id="emptyMsg">⛩ Aucun résultat.</p>
+</section>
+
+<!-- HISTORIQUE (connecté) -->
+<section class="section hidden" id="secHist">
+  <div class="sec-title"><span>▮</span> TON HISTORIQUE</div>
+  <div class="grid" id="gridHist"></div>
+</section>
+
+<!-- BOUTIQUE -->
+<section class="section shop-sec" id="boutique">
+  <div class="sec-title"><span>▮</span> BOUTIQUE — POSTERS & FIGURINES</div>
+  <p class="shop-intro">🇭🇹 Unique en Haïti — Livrés chez vous à Port-au-Prince en 24h.</p>
+  <div class="shop-grid" id="shopGrid"></div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="sec-title"><span>▮</span> CONTACT</div>
+  <div class="contact-wrap">
+    <div class="contact-links">
+      <a class="clink" href="https://wa.me/50935144295" target="_blank">📱 <span>WhatsApp — +509 3514 4295</span></a>
+      <a class="clink" href="mailto:ldorce30@gmail.com">✉️ <span>ldorce30@gmail.com</span></a>
+      <a class="clink" href="https://instagram.com/psyx_1" target="_blank">📸 <span>Instagram @psyx_1</span></a>
+      <a class="clink" href="https://tiktok.com/@psyx_1" target="_blank">🎵 <span>TikTok @psyx_1</span></a>
+      <div class="delivery-pill">🚀 Livraison Port-au-Prince — 24h</div>
+    </div>
+    <div class="contact-form">
+      <div class="field"><label>Nom</label><input id="cName" placeholder="Prénom Nom…"/></div>
+      <div class="field"><label>WhatsApp</label><input id="cPhone" placeholder="+509…"/></div>
+      <div class="field"><label>Message</label><textarea id="cMsg" rows="4" placeholder="Votre message…"></textarea></div>
+      <button class="btn-primary" id="btnContact">ENVOYER VIA WHATSAPP</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">PSYX<span>MANGA</span></div>
+  <div class="foot-slogan">"Lire n'est que beauté"</div>
+  <div class="foot-links">
+    <a href="https://wa.me/50935144295" target="_blank">WhatsApp</a>
+    <a href="mailto:ldorce30@gmail.com">Email</a>
+    <a href="https://instagram.com/psyx_1" target="_blank">Instagram</a>
+    <a href="https://tiktok.com/@psyx_1" target="_blank">TikTok</a>
+  </div>
+  <p>© 2025 Psyx-Manga · Haïti</p>
+</footer>
+
+<!-- ======= MODALS ======= -->
+
+<!-- AUTH -->
+<div class="overlay hidden" id="mAuth">
+  <div class="modal">
+    <button class="mclose" data-close="mAuth">✕</button>
+    <div class="mtabs">
+      <button class="mtab active" data-tab="tLogin">Connexion</button>
+      <button class="mtab" data-tab="tReg">S'inscrire</button>
+    </div>
+    <div id="tLogin">
+      <div class="field"><label>Pseudo</label><input id="lUser" placeholder="Ton pseudo…"/></div>
+      <div class="field"><label>Mot de passe</label><input id="lPass" type="password" placeholder="••••••"/></div>
+      <button class="btn-primary full" id="btnLogin">SE CONNECTER</button>
+    </div>
+    <div id="tReg" class="hidden">
+      <div class="field"><label>Pseudo</label><input id="rUser" placeholder="Choisis un pseudo…"/></div>
+      <div class="field"><label>Mot de passe</label><input id="rPass" type="password" placeholder="Min. 6 caractères"/></div>
+      <button class="btn-primary full" id="btnReg">REJOINDRE L'EMPIRE</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL -->
+<div class="overlay hidden" id="mDetail">
+  <div class="modal modal-lg">
+    <button class="mclose" data-close="mDetail">✕</button>
+    <div id="detailBody"></div>
+  </div>
+</div>
+
+<!-- READER -->
+<div class="overlay reader-overlay hidden" id="mReader">
+  <div class="reader">
+    <div class="reader-head">
+      <span id="rdTitle">—</span>
+      <span id="rdChap">—</span>
+      <button class="mclose" data-close="mReader">✕</button>
+    </div>
+    <div class="reader-body">
+      <button class="rd-btn" id="rdPrev">‹</button>
+      <div class="rd-page" id="rdPage"></div>
+      <button class="rd-btn" id="rdNext">›</button>
+    </div>
+    <div class="reader-foot"><span id="rdInfo">Page 1/20</span></div>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="overlay hidden" id="mCart">
+  <div class="modal">
+    <button class="mclose" data-close="mCart">✕</button>
+    <div class="modal-title">🛒 Mon Panier</div>
+    <div id="cartList"></div>
+    <div id="cartTotal" class="cart-total"></div>
+    <button class="btn-primary full" id="btnCheckout">COMMANDER →</button>
+    <p class="hint">Vous serez redirigé vers WhatsApp</p>
+  </div>
+</div>
+
+<!-- ORDER -->
+<div class="overlay hidden" id="mOrder">
+  <div class="modal">
+    <button class="mclose" data-close="mOrder">✕</button>
+    <div class="modal-title">📦 Infos de livraison</div>
+    <div class="field"><label>Nom complet</label><input id="oName" placeholder="Prénom Nom…"/></div>
+    <div class="field"><label>📱 WhatsApp</label><input id="oPhone" placeholder="+509 3XXX XXXX"/></div>
+    <div class="field"><label>📍 Adresse</label><textarea id="oAddr" rows="2" placeholder="Rue, Quartier, Ville…"></textarea></div>
+    <div class="field">
+      <label>💳 Paiement</label>
+      <div class="pay-opts">
+        <label><input type="radio" name="pay" value="MonCash" checked/> MonCash</label>
+        <label><input type="radio" name="pay" value="NatCash"/> NatCash</label>
+        <label><input type="radio" name="pay" value="Carte bancaire"/> Carte bancaire</label>
+      </div>
+    </div>
+    <button class="btn-primary full" id="btnOrder">📱 ENVOYER LA COMMANDE</button>
+    <p class="hint">🚀 Livraison Port-au-Prince en 24h</p>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="overlay hidden" id="mAdmin">
+  <div class="modal modal-lg">
+    <button class="mclose" data-close="mAdmin">✕</button>
+    <div class="modal-title">🔒 ESPACE ADMIN</div>
+    <div id="adminGate">
+      <div class="field"><label>Mot de passe admin</label><input id="adminPass" type="password" placeholder="Mot de passe…"/></div>
+      <button class="btn-primary full" id="btnAdminLogin">ENTRER</button>
+    </div>
+    <div id="adminPanel" class="hidden">
+      <div class="admin-tabs">
+        <button class="atab active" data-panel="aUsers">👥 Utilisateurs</button>
+        <button class="atab" data-panel="aOrders">📦 Commandes</button>
+        <button class="atab" data-panel="aCatalog">📚 Catalogue</button>
+      </div>
+      <div id="aUsers" class="apanel"></div>
+      <div id="aOrders" class="apanel hidden"></div>
+      <div id="aCatalog" class="apanel hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 18+ -->
+<div class="overlay hidden" id="mAdult">
+  <div class="modal" style="text-align:center">
+    <button class="mclose" data-close="mAdult">✕</button>
+    <div style="font-size:3rem;margin-bottom:1rem">🔞</div>
+    <div class="modal-title">Contenu Adulte</div>
+    <p style="color:#888;margin-bottom:1.5rem">Contenu réservé aux +18 ans.<br/>Disponible sur demande privée.</p>
+    <a class="btn-primary" href="https://wa.me/50935144295?text=Bonjour%2C+je+souhaite+acceder+au+contenu+adulte+Psyx-Manga." target="_blank">📱 CONTACTER SUR WHATSAPP</a>
+    <br/><br/>
+    <button class="btn-sec" data-close="mAdult">Annuler</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ADMIN TRIGGER (footer secret) -->
+<div style="position:fixed;bottom:0;right:0;width:40px;height:40px;cursor:pointer;z-index:500" onclick="openModal('mAdmin')" title="Admin"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
